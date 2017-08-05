@@ -95,7 +95,7 @@ done
 printTitle "Cleanup local cache"
 apt-get clean
 
-printTitle "Update available package informations"
+printTitle "Update available packages informations"
 apt-get update
 
 printTitle "UPGRADE PACKAGES"
@@ -117,7 +117,7 @@ else
 	
 fi
 
-printTitle "Pacakge cleanup (autoremove unused packages)"
+printTitle "Packages cleanup (autoremove unused packages)"
 apt-get autoremove -y
 
 printTitle "Current version"
