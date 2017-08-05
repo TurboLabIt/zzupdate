@@ -12,6 +12,14 @@ INSTALL_DIR=${INSTALL_DIR_PARENT}${SCRIPT_NAME}/
 ## /etc/ config directory
 mkdir -p "/etc/turbolab.it/"
 
+## Pre-requisites
+if [ -f "/etc/redhat-release" ]; then
+
+else
+	apt update
+	apt install git -y
+fi
+
 ## Install/update
 echo ""
 if [ ! -d "$INSTALL_DIR" ]; then
