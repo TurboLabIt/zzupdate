@@ -95,7 +95,7 @@ done
 printTitle "Cleanup local cache"
 apt-get clean
 
-printTitle "Update package list"
+printTitle "Update available package informations"
 apt-get update
 
 printTitle "UPGRADE PACKAGES"
@@ -103,13 +103,13 @@ apt-get dist-upgrade -y
 
 if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "1" ]; then
 
-    printTitle "Silently upgrade to a new release, if any"
+	printTitle "Silently upgrade to a new release, if any"
 	do-release-upgrade -f DistUpgradeViewNonInteractive
 	
-if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "0" ]; then
+elif [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "0" ]; then
 
 	printTitle "Interactively upgrade to a new release, if any"
-	do-release-upgrade -f
+	do-release-upgrade
 	
 else
 
@@ -117,11 +117,11 @@ else
 	
 fi
 
-printTitle "Remove unused packages"
+printTitle "Pacakge cleanup (autoremove unused packages)"
 apt-get autoremove -y
 
 printTitle "Current version"
-lsb_release –d
+lsb_release -d
 
 printTitle "Time took"
 echo "$((($(date +%s)-$TIME_START)/60)) min."
@@ -140,4 +140,3 @@ fi
 printTitle "The End"
 echo $(date)
 echo "$FRAME"
-
