@@ -13,12 +13,8 @@ INSTALL_DIR=${INSTALL_DIR_PARENT}${SCRIPT_NAME}/
 mkdir -p "/etc/turbolab.it/"
 
 ## Pre-requisites
-if [ -f "/etc/redhat-release" ]; then
-
-else
-	apt update
-	apt install git -y
-fi
+apt update
+apt install git -y
 
 ## Install/update
 echo ""
