@@ -36,6 +36,25 @@ function printTitle
     echo ""
 }
 
+## root check
+if ! [ $(id -u) = 0 ]; then
+
+		echo ""
+		echo "vvvvvvvvvvvvvvvvvvvv"
+		echo "Catastrophic error!!"
+		echo "^^^^^^^^^^^^^^^^^^^^"
+		echo "This script must run as root!"
+
+		printTitle "How to fix it?"
+		echo "Execute the script like this:"
+		echo "sudo $SCRIPT_NAME"
+
+		printTitle "The End"
+		echo $(date)
+		echo "$FRAME"
+		exit
+fi
+
 ## Profile requested
 if [ ! -z "$1" ]; then
 
