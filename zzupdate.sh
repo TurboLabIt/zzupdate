@@ -117,6 +117,18 @@ else
 	
 fi
 
+if [ "$COMPOSER_UPGRADE" = "1" ]; then
+
+	printTitle "Self-updating Composer"
+	
+	if ! [ -x "$(command -v composer)" ]; then
+		echo "Composer is not installed"
+	else
+		composer self-update
+	fi
+fi
+
+
 printTitle "Packages cleanup (autoremove unused packages)"
 apt-get autoremove -y
 
