@@ -17,6 +17,7 @@ HOSTNAME="$(hostname)"
 
 ## Absolute path to this script, e.g. /home/user/bin/foo.sh
 SCRIPT_FULLPATH=$(readlink -f "$0")
+SCRIPT_HASH=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
 
 ## Absolute path this script is in, thus /home/user/bin
 SCRIPT_DIR=$(dirname "$SCRIPT_FULLPATH")/
@@ -90,6 +91,28 @@ do
 		source "$CONFIGFILE_FULLPATH"
 	fi
 done
+
+
+printTitle "Self-update and update of other zzScript"
+INSTALL_DIR_PARENT="/usr/local/turbolab.it/"
+for dir in "${ZZSCRIPT_DIRS[@]}"; do
+	${ZZSCRIPT_DIRS[@]}setup.sh
+done
+
+SCRIPT_HASH_AFTER_UPDATE=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
+if [ "$SCRIPT_HASH" != "$SCRIPT_HASH_AFTER_UPDATE" ]; then
+		echo ""
+		echo "vvvvvvvvvvvvvvvvvvvvvv"
+		echo "Self-update installed!"
+		echo "^^^^^^^^^^^^^^^^^^^^^^"
+		echo "zzupdate itself has been updated!"
+		echo "Please run zzupdate again to update your system."
+
+		printTitle "The End"
+		echo $(date)
+		echo "$FRAME"
+		exit
+fi
 
 
 printTitle "Cleanup local cache"
