@@ -92,6 +92,18 @@ do
 done
 
 
+if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
+
+	printTitle "Switching to the 'normal' release channel (if 'never' or 'lts')"
+	sed -i -E 's/Prompt=(never|lts)/Prompt=normal/g' "/etc/update-manager/release-upgrades"
+	
+else
+
+	printTitle "Channel switching is disabled: using pre-existing setting"
+	
+fi
+
+
 printTitle "Cleanup local cache"
 apt-get clean
 

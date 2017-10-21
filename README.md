@@ -14,3 +14,9 @@ Now copy the provided sample configuration file (`zzupdate.default.conf`) to you
 
 # Run it
 It's upgrade time! Run `zzupdate` to fully update your system.
+
+# Guides/reviews
+
+* *Italian*: [Aggiornare Ubuntu con un solo comando: zzupdate (pacchetti e sistema operativo)](https://turbolab.it/linux-27/aggiornare-ubuntu-solo-comando-zzupdate-pacchetti-sistema-operativo-1383)
+* *English*: [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
+* *English*: [Reddit on /r/Ubuntu](https://www.reddit.com/r/Ubuntu/comments/6zn8fz/zzupdate_lets_you_to_upgrade_your_ubuntu/)
