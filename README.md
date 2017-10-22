@@ -1,7 +1,7 @@
 # zzupdate
 A simple command to fully update an Ubuntu PC/server via apt. Mostly hand-off and unattended. The provided `setup.sh` auto-installs/updates the code and makes the script available as a new, simple shell command (`zzupdate`). The project aims to deliver a fully configfile-driven script: no code editing should be necessary!
 
-**Parli italiano?** » Leggi: [Aggiornare Ubuntu: quali differenze fra apt-get update, apt-get upgrade e apt-get dist-upgrade? Il modo migliore è... zzupdate!](https://turbolab.it/linux-27/aggiornare-ubuntu-quali-differenze-apt-get-update-apt-get-upgrade-apt-get-dist-upgrade-modo-migliore-...-zzupdate-199)
+**Parli italiano?** » Leggi: [Aggiornare Ubuntu: quali differenze fra apt-get update, apt-get upgrade e apt-get dist-upgrade? Il modo migliore è... zzupdate!](https://turbolab.it/199)
 
 # Install
 Just execute:
@@ -17,6 +17,6 @@ It's upgrade time! Run `zzupdate` to fully update your system.
 
 # Guides/reviews
 
-* *Italian*: [Aggiornare Ubuntu con un solo comando: zzupdate (pacchetti e sistema operativo)](https://turbolab.it/linux-27/aggiornare-ubuntu-solo-comando-zzupdate-pacchetti-sistema-operativo-1383)
-* *English*: [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
-* *English*: [Reddit on /r/Ubuntu](https://www.reddit.com/r/Ubuntu/comments/6zn8fz/zzupdate_lets_you_to_upgrade_your_ubuntu/)
+* **Italian**: [Aggiornare Ubuntu con un solo comando: zzupdate (pacchetti e sistema operativo)](https://turbolab.it/199)
+* **English**: [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
+* **English**: [Reddit on /r/Ubuntu](https://www.reddit.com/r/Ubuntu/comments/6zn8fz/zzupdate_lets_you_to_upgrade_your_ubuntu/)
