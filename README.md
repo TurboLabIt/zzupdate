@@ -21,6 +21,6 @@ It's upgrade time! Run `zzupdate` to fully update your system.
 * **English** (ostechnix): [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
 * **English** (itsfoss): [Easily Upgrade Ubuntu to a Newer Version with This Single Command](https://itsfoss.com/zzupdate-upgrade-ubuntu)
 
-#Social
+# Social
 
 * **English**: [Reddit on /r/Ubuntu](https://www.reddit.com/r/Ubuntu/comments/6zn8fz/zzupdate_lets_you_to_upgrade_your_ubuntu/)
