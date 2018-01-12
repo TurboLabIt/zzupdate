@@ -1,3 +1,5 @@
+![logo](https://turbolab.it/immagini/max/aggiornare-ubuntu-quali-differenze-apt-get-update-apt-get-upgrade-apt-get-dist-upgrade-modo-migliore-...-zzupdate-zzupdate-spotlight-9463.img)
+
 # zzupdate
 A simple command to fully update an Ubuntu PC/server via apt. Mostly hand-off and unattended. The provided `setup.sh` auto-installs/updates the code and makes the script available as a new, simple shell command (`zzupdate`). The project aims to deliver a fully configfile-driven script: no code editing should be necessary!
 
