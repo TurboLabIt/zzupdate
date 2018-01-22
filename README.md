@@ -19,9 +19,10 @@ It's upgrade time! Run `zzupdate` to fully update your system.
 
 # Guides/reviews
 
-* **Italian** (TurboLab.it): [Aggiornare Ubuntu con un solo comando: zzupdate (pacchetti e sistema operativo)](https://turbolab.it/199)
+* **Italiano** (TurboLab.it): [Aggiornare Ubuntu con un solo comando: zzupdate (pacchetti e sistema operativo)](https://turbolab.it/199)
 * **English** (ostechnix): [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
 * **English** (itsfoss): [Easily Upgrade Ubuntu to a Newer Version with This Single Command](https://itsfoss.com/zzupdate-upgrade-ubuntu)
+* **Español** (ubunlog): [zzupdate, actualiza tu sistema Ubuntu con un solo comando en la terminal](https://ubunlog.com/zzupdate-actualiza-comando-terminal/)
 
 # Social
 
