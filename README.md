@@ -23,7 +23,7 @@ It's upgrade time! Run `zzupdate` to fully update your system.
 * **English** (ostechnix): [How To Upgrade Ubuntu With A Single Command](https://www.ostechnix.com/upgrade-ubuntu-single-command/)
 * **English** (itsfoss): [Easily Upgrade Ubuntu to a Newer Version with This Single Command](https://itsfoss.com/zzupdate-upgrade-ubuntu)
 * **Español** (ubunlog): [zzupdate, actualiza tu sistema Ubuntu con un solo comando en la terminal](https://ubunlog.com/zzupdate-actualiza-comando-terminal/)
-* **English** (2daygeek): [https://www.2daygeek.com/zzupdate-single-command-to-upgrade-ubuntu-18-04/]
+* **English** (2daygeek): [https://www.2daygeek.com/zzupdate-single-command-to-upgrade-ubuntu-18-04/](zzupdate – Single Command To Upgrade Ubuntu 18.04 LTS (Bionic Beaver))
 
 # Social
 
