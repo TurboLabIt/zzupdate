@@ -13,8 +13,8 @@ INSTALL_DIR=${INSTALL_DIR_PARENT}${SCRIPT_NAME}/
 mkdir -p "/etc/turbolab.it/"
 
 ## Pre-requisites
-apt update
-apt install git -y
+sudo apt-get update
+sudo apt-get install git -y
 
 ## Install/update
 echo ""
