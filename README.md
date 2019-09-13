@@ -8,7 +8,7 @@ A simple command to fully update an Ubuntu PC/server via apt. Mostly hand-off an
 # Install
 Just execute:
 
-`curl -s https://raw.githubusercontent.com/TurboLabIt/zzupdate/master/setup.sh | sudo sh`
+`sudo apt install curl -y -qq && curl -s https://raw.githubusercontent.com/TurboLabIt/zzupdate/master/setup.sh | sudo sh`
 
 Now copy the provided sample configuration file (`zzupdate.default.conf`) to your own `zzupdate.conf` and set your preference:
 
