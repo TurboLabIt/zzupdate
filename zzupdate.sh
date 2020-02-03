@@ -167,6 +167,18 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
 	fi
 fi
 
+if [ "$SYMFONY_UPGRADE" = "1" ]; then
+
+	printTitle "Self-updating Symfony"
+	
+	if ! [ -x "$(command -v symfony)" ]; then
+		echo "Symfony is not installed"
+	else
+		symfony self:update
+	fi
+fi
+
+
 
 printTitle "Packages cleanup (autoremove unused packages)"
 apt-get autoremove -y
