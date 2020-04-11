@@ -174,7 +174,7 @@ if [ "$SYMFONY_UPGRADE" = "1" ]; then
 	if ! [ -x "$(command -v symfony)" ]; then
 		echo "Symfony is not installed"
 	else
-		symfony self:update
+		symfony self:update --yes
 	fi
 fi
 
