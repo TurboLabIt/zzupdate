@@ -98,7 +98,7 @@ ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
 for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 
-	git -C "ZZSCRIPT_DIR" pull
+	git -C "$ZZSCRIPT_DIR" pull
 done
 
 SCRIPT_HASH_AFTER_UPDATE=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
