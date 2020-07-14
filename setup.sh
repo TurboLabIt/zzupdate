@@ -1,5 +1,5 @@
 #!/bin/bash
-clear
+echo ""
 
 ## Script name
 SCRIPT_NAME=zzupdate
