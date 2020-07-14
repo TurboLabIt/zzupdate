@@ -92,17 +92,13 @@ do
 	fi
 done
 	
-printTitle "Self-update and update of other zzScript"
-INSTALL_DIR_PARENT="/usr/local/turbolab.it/"
-ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
-for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
-
-	git -C "$ZZSCRIPT_DIR" pull
-done
+printTitle "Self-update...."
+source "${SCRIPT_FULLPATH}setup.sh"
 
 SCRIPT_HASH_AFTER_UPDATE=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
 if [ "$SCRIPT_HASH" != "$SCRIPT_HASH_AFTER_UPDATE" ]; then
+
 		echo ""
 		echo "vvvvvvvvvvvvvvvvvvvvvv"
 		echo "Self-update installed!"
@@ -115,6 +111,15 @@ if [ "$SCRIPT_HASH" != "$SCRIPT_HASH_AFTER_UPDATE" ]; then
 		echo "$FRAME"
 		exit
 fi
+
+INSTALL_DIR_PARENT="/usr/local/turbolab.it/"
+ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
+
+for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
+
+	printTitle "Update ${ZZSCRIPT_DIR}..."
+	git -C "$ZZSCRIPT_DIR" pull
+done
 
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
