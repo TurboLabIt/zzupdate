@@ -123,7 +123,6 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 		git -C "$ZZSCRIPT_DIR" pull
 	fi
 done
-exit
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
