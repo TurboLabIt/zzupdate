@@ -117,13 +117,13 @@ ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
 for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 
-	if [ "${ZZSCRIPT_DIR}/" != "$SCRIPT_DIR" ] &&  [ -d "${ZZSCRIPT_DIR}.git" ]; then
+	if [ "${ZZSCRIPT_DIR}/" != "$SCRIPT_DIR" ] && [ -d "${ZZSCRIPT_DIR}/.git" ]; then
 	
 		printTitle "Update ${ZZSCRIPT_DIR}..."
 		git -C "$ZZSCRIPT_DIR" pull
 	fi
 done
-
+exit
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
