@@ -94,7 +94,7 @@ done
 	
 
 printTitle "Self-update...."
-source "${SCRIPT_FULLPATH}setup.sh"
+source "${SCRIPT_DIR}setup.sh"
 
 SCRIPT_HASH_AFTER_UPDATE=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
 if [ "$SCRIPT_HASH" != "$SCRIPT_HASH_AFTER_UPDATE" ]; then
