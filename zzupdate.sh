@@ -91,7 +91,7 @@ do
 		source "$CONFIGFILE_FULLPATH"
 	fi
 done
-	
+
 
 printTitle "Self-update...."
 source "${SCRIPT_DIR}setup.sh"
@@ -118,9 +118,9 @@ ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 
 	if [ "${ZZSCRIPT_DIR}/" != "$SCRIPT_DIR" ] && [ -d "${ZZSCRIPT_DIR}/.git" ]; then
-	
+
 		printTitle "Update ${ZZSCRIPT_DIR}..."
-		git -C "$ZZSCRIPT_DIR" pull
+		git -C "$ZZSCRIPT_DIR" pull --no-rebase
 	fi
 done
 
@@ -128,11 +128,11 @@ if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
 	printTitle "Switching to the 'normal' release channel (if 'never' or 'lts')"
 	sed -i -E 's/Prompt=(never|lts)/Prompt=normal/g' "/etc/update-manager/release-upgrades"
-	
+
 else
 
 	printTitle "Channel switching is disabled: using pre-existing setting"
-	
+
 fi
 
 
@@ -149,22 +149,22 @@ if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "1" ]; then
 
 	printTitle "Silently upgrade to a new release, if any"
 	do-release-upgrade -f DistUpgradeViewNonInteractive
-	
+
 elif [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "0" ]; then
 
 	printTitle "Interactively upgrade to a new release, if any"
 	do-release-upgrade
-	
+
 else
 
 	printTitle "Upgrade to a new release skipped (disabled in config)"
-	
+
 fi
 
 if [ "$COMPOSER_UPGRADE" = "1" ]; then
 
 	printTitle "Self-updating Composer"
-	
+
 	if ! [ -x "$(command -v composer)" ]; then
 		echo "Composer is not installed"
 	else
@@ -175,7 +175,7 @@ fi
 if [ "$SYMFONY_UPGRADE" = "1" ]; then
 
 	printTitle "Self-updating Symfony"
-	
+
 	if ! [ -x "$(command -v symfony)" ]; then
 		echo "Symfony is not installed"
 	else
@@ -196,7 +196,7 @@ echo "$((($(date +%s)-$TIME_START)/60)) min."
 
 if [ "$REBOOT" = "1" ]; then
 	printTitle "Rebooting"
-	
+
 	while [ $REBOOT_TIMEOUT -gt 0 ]; do
 	   echo -ne "$REBOOT_TIMEOUT\033[0K\r"
 	   sleep 1

@@ -31,7 +31,7 @@ fi
 
 ## Fetch & pull new code
 cd "$INSTALL_DIR"
-git pull
+git pull --no-rebase
 
 ## Symlink (globally-available command)
 if [ ! -e "/usr/bin/${SCRIPT_NAME}" ]; then
