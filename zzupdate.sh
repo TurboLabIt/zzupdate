@@ -14,6 +14,7 @@ echo "$FRAME"
 TIME_START="$(date +%s)"
 DOWEEK="$(date +'%u')"
 HOSTNAME="$(hostname)"
+INITIAL_DIR=$(pwd)
 
 ## Absolute path to this script, e.g. /home/user/bin/foo.sh
 SCRIPT_FULLPATH=$(readlink -f "$0")
@@ -183,6 +184,27 @@ if [ "$SYMFONY_UPGRADE" = "1" ]; then
 	fi
 fi
 
+if [ "$NIMBUS_UPGRADE" = "1" ]; then
+
+	printTitle "Updating Nimbus"
+	
+	if [ -f "/usr/local/bin/nimbus" ]; then
+	
+		cd $HOME
+		git clone https://github.com/status-im/nimbus-eth2.git
+		cd nimbus-eth2
+		make beacon_node
+		mv $HOME/nimbus-eth2/build/beacon_node /usr/local/bin/nimbus
+		cd $HOME
+		rm -rf $HOME/nimbus-eth2
+		service nimbus restart
+		nimbus --version
+		
+	else
+		
+		echo "Nimbus is not installed"
+	fi
+fi
 
 
 printTitle "Packages cleanup (autoremove unused packages)"
@@ -204,6 +226,10 @@ if [ "$REBOOT" = "1" ]; then
 	done
 	reboot
 fi
+
+printTitle "Switching back to $INITIAL_DIR"
+cd "$INITIAL_DIR"
+pwd
 
 printTitle "The End"
 echo $(date)
