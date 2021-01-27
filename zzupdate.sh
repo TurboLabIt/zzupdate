@@ -146,6 +146,20 @@ apt-get update
 printTitle "UPGRADE PACKAGES"
 apt-get dist-upgrade -y
 
+
+if [ "$FIRMWARE_UPGRADE" = "1" ]; then
+
+    printTitle "Firmware upgrade"
+	fwupdmgr get-upgrades
+    fwupdmgr update -y
+
+else
+
+    printTitle "Firmware upgrade skipped (disabled in config)"
+
+fi
+
+
 if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "1" ]; then
 
     printTitle "Silently upgrade to a new release, if any"
