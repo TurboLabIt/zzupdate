@@ -207,8 +207,8 @@ if [ "$NIMBUS_UPGRADE" = "1" ]; then
         cd $HOME
         git clone https://github.com/status-im/nimbus-eth2.git
         cd nimbus-eth2
-        make -j4 beacon_node
-        mv $HOME/nimbus-eth2/build/beacon_node /usr/local/bin/nimbus
+        make -j4 nimbus_beacon_node
+        mv $HOME/nimbus-eth2/build/nimbus_beacon_node /usr/local/bin/nimbus
         cd $HOME
         rm -rf $HOME/nimbus-eth2
         service nimbus restart
