@@ -144,7 +144,7 @@ printTitle "Update available packages informations"
 apt-get update
 
 printTitle "UPGRADE PACKAGES"
-apt-get dist-upgrade -y
+apt-get dist-upgrade -y --allow-downgrades
 
 
 if [ "$FIRMWARE_UPGRADE" = "1" ]; then
