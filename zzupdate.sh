@@ -125,6 +125,12 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
   fi
 done
 
+ZZALIAS_SETUP=${INSTALL_DIR_PARENT}zzalias/setup.sh
+if [ -f "${ZZALIAS_SETUP}" ]; then
+  bash "${ZZALIAS_SETUP}"
+fi
+
+
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
   printTitle "Switching to the 'normal' release channel (if 'never' or 'lts')"
