@@ -20,14 +20,16 @@ if [ ! -d "$INSTALL_DIR" ]; then
   apt update && apt install git -y
 
   echo "Installing..."
-	echo "-------------"
-	mkdir -p "$INSTALL_DIR_PARENT"
-	cd "$INSTALL_DIR_PARENT"
-	git clone https://github.com/TurboLabIt/${SCRIPT_NAME}.git
+  echo "-------------"
+  mkdir -p "$INSTALL_DIR_PARENT"
+  cd "$INSTALL_DIR_PARENT"
+  git clone https://github.com/TurboLabIt/${SCRIPT_NAME}.git
 
 else
-	echo "Updating..."
-	echo "----------"
+
+  echo "Updating..."
+  echo "----------"
+  
 fi
 
 ## Fetch & pull new code
@@ -36,7 +38,7 @@ git pull --no-rebase
 
 ## Symlink (globally-available command)
 if [ ! -e "/usr/bin/${SCRIPT_NAME}" ]; then
-	ln -s ${INSTALL_DIR}${SCRIPT_NAME}.sh /usr/bin/${SCRIPT_NAME}
+  ln -s ${INSTALL_DIR}${SCRIPT_NAME}.sh /usr/bin/${SCRIPT_NAME}
 fi
 
 ## Restore working directory
