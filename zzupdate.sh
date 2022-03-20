@@ -95,6 +95,7 @@ done
 
 
 printTitle "Self-update...."
+git -C "${SCRIPT_DIR}" pull --no-rebase
 source "${SCRIPT_DIR}setup.sh"
 
 SCRIPT_HASH_AFTER_UPDATE=`md5sum ${SCRIPT_FULLPATH} | awk '{ print $1 }'`
