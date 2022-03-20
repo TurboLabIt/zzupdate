@@ -191,7 +191,7 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
   if ! [ -x "$(command -v composer)" ]; then
     echo "Composer is not installed"
   else
-    composer self-update
+    XDEBUG_MODE=off composer self-update
   fi
 fi
 
