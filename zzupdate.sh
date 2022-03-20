@@ -118,17 +118,18 @@ ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
 for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 
-  if [ "${ZZSCRIPT_DIR}/" != "$SCRIPT_DIR" ] && [ -d "${ZZSCRIPT_DIR}/.git" ]; then
-
-    printTitle "Update ${ZZSCRIPT_DIR}..."
-    git -C "$ZZSCRIPT_DIR" pull --no-rebase
+  if [ "${ZZSCRIPT_DIR}/" = "$SCRIPT_DIR" ] || [ ! -d "${ZZSCRIPT_DIR}/.git" ]; then
+    continue
   fi
+  
+  printTitle "***** Update ${ZZSCRIPT_DIR}... *****"
+  git -C "$ZZSCRIPT_DIR" pull --no-rebase
+  
+  if [ -f "${ZZSCRIPT_DIR}/setup.sh" ]; then
+    bash "${ZZSCRIPT_DIR}/setup.sh"
+  fi
+  
 done
-
-ZZALIAS_SETUP=${INSTALL_DIR_PARENT}zzalias/setup.sh
-if [ -f "${ZZALIAS_SETUP}" ]; then
-  bash "${ZZALIAS_SETUP}"
-fi
 
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
@@ -231,3 +232,4 @@ pwd
 printTitle "The End"
 echo $(date)
 echo "$FRAME"
+
