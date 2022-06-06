@@ -16,6 +16,16 @@ Now copy the provided sample configuration file (`zzupdate.default.conf`) to you
 `sudo cp /usr/local/turbolab.it/zzupdate/zzupdate.default.conf /etc/turbolab.it/zzupdate.conf && sudo nano /etc/turbolab.it/zzupdate.conf`
 
 
+# Safe config
+
+Need a safe config for production servers?
+
+````
+curl -o /etc/turbolab.it/zzupdate.conf https://raw.githubusercontent.com/TurboLabIt/zzupdate/master/zzupdate.default-rabbit-mode.conf
+
+````
+
+
 # Run it
 It's upgrade time! Run `zzupdate` to fully update your system.
 
