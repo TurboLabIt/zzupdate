@@ -1,4 +1,4 @@
-# 🔃 zzupdate 🔃 
+# 🔃 zzupdate 🔃
 A simple command to fully update an Ubuntu PC/server via apt. Mostly hand-off and unattended. The provided `setup.sh` auto-installs/updates the code and makes the script available as a new, simple shell command (`zzupdate`). The project aims to deliver a fully configfile-driven script: no code editing should be necessary!
 
 **Parli italiano?** » Leggi: [Aggiornare Ubuntu: quali differenze fra apt-get update, apt-get upgrade e apt-get dist-upgrade? Il modo migliore è... zzupdate!](https://turbolab.it/199)
