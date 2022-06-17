@@ -132,6 +132,11 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
   
 done
 
+if [ ! -z "${ADDITIONAL_UPDATE_SCRIPT}" ]; then
+  fxTitle "💨 Running ${ADDITIONAL_UPDATE_SCRIPT}..."
+  bash "$ADDITIONAL_UPDATE_SCRIPT"
+fi
+
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
