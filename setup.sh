@@ -3,9 +3,7 @@ echo ""
 SCRIPT_NAME=zzupdate
 
 ## bash-fx
-if [ -z "$(command -v curl)" ]; then
-  sudo apt update && sudo apt install curl -y
-fi
+sudo apt update && sudo apt install curl -y
 curl -s https://raw.githubusercontent.com/TurboLabIt/bash-fx/master/setup.sh?$(date +%s) | sudo bash
 source /usr/local/turbolab.it/bash-fx/bash-fx.sh
 ## bash-fx is ready
