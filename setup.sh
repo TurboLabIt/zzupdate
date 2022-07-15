@@ -11,10 +11,5 @@ source /usr/local/turbolab.it/bash-fx/bash-fx.sh
 ## bash-fx is ready
 
 sudo bash /usr/local/turbolab.it/bash-fx/setup/start.sh ${SCRIPT_NAME}
-
-## Symlink (globally-available zzupdate command)
-if [ ! -f "/usr/local/bin/${SCRIPT_NAME}" ]; then
-  ln -s ${INSTALL_DIR}${SCRIPT_NAME}.sh /usr/local/bin/${SCRIPT_NAME}
-fi
-
+fxLinkBin ${INSTALL_DIR}${SCRIPT_NAME}.sh
 sudo bash /usr/local/turbolab.it/bash-fx/setup/the-end.sh ${SCRIPT_NAME}
