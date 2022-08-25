@@ -158,14 +158,11 @@ fxTitle "Time took"
 echo "$((($(date +%s)-$TIME_START)/60)) min."
 
 if [ "$REBOOT" = "1" ]; then
-  fxTitle "Rebooting"
 
-  while [ $REBOOT_TIMEOUT -gt 0 ]; do
-     echo -ne "$REBOOT_TIMEOUT\033[0K\r"
-     sleep 1
-     : $((REBOOT_TIMEOUT--))
-  done
-  reboot
+  fxTitle "Rebooting"
+  fxCountdown "$REBOOT_TIMEOUT"
+  fxEndFooter
+  shutdown -r -t 5
 fi
 
 fxEndFooter
