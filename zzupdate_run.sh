@@ -100,6 +100,7 @@ apt-get dist-upgrade -y --allow-downgrades
 if [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
   fxTitle "Firmware upgrade"
+  if [ -z $(command -v fwupdmgr) ]; then apt install fwupd -y; fi
   fwupdmgr get-upgrades -y
   fwupdmgr update -y
 
