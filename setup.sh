@@ -10,5 +10,4 @@ source /usr/local/turbolab.it/bash-fx/bash-fx.sh
 
 sudo bash /usr/local/turbolab.it/bash-fx/setup/start.sh ${SCRIPT_NAME}
 fxLinkBin ${INSTALL_DIR}${SCRIPT_NAME}.sh
-if [ -z $(command -v fwupdmgr) ]; then sudo apt update && sudo apt install fwupd -y; fi
 sudo bash /usr/local/turbolab.it/bash-fx/setup/the-end.sh ${SCRIPT_NAME}
