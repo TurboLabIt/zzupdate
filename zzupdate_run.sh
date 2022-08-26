@@ -162,7 +162,6 @@ if [ "$REBOOT" = "1" ]; then
 
   fxTitle "Rebooting"
   fxCountdown "$REBOOT_TIMEOUT"
-  fxEndFooter
   shutdown -r -t 5
 fi
 
