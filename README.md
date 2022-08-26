@@ -26,7 +26,7 @@ sudo cp /usr/local/turbolab.it/zzupdate/zzupdate.default.conf /etc/turbolab.it/z
 Need a safe default config for production servers?
 
 ````bash
-ln -s /etc/turbolab.it/zzupdate.conf /usr/local/turbolab.it/zzupdate/zzupdate.profile.server.conf
+ln -s /usr/local/turbolab.it/zzupdate/zzupdate.profile.server.conf /etc/turbolab.it/zzupdate.conf
 
 ````
 
