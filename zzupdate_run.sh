@@ -38,7 +38,7 @@ fi
 ## self-update
 HASH_BEFORE=$(fxHashFile "${SCRIPT_FULLPATH}")
 
-fxTitle "Self-update...."
+fxTitle "🔃 Self-update...."
 git -C "${SCRIPT_DIR}" pull --no-rebase
 bash "${SCRIPT_DIR}setup.sh"
 
@@ -77,59 +77,60 @@ fi
 
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
-  fxTitle "Switching to the 'normal' release channel (if 'never' or 'lts')"
+  fxTitle "🦘 Switching to the 'normal' release channel (if 'never' or 'lts')"
   sed -i -E 's/Prompt=(never|lts)/Prompt=normal/g' "/etc/update-manager/release-upgrades"
 
 else
 
-  fxTitle "Channel switching is disabled: using pre-existing setting"
-
+  fxTitle "🐇 Channel switching is disabled: using pre-existing setting"
 fi
 
 
-fxTitle "Cleanup local cache"
+fxTitle "🧹 Cleanup local cache"
 apt-get clean
 
-fxTitle "Update available packages informations"
+fxTitle "🔍 Update available packages informations"
 apt-get update
 
-fxTitle "UPGRADE PACKAGES"
+fxTitle "📦 UPGRADE PACKAGES"
 apt-get dist-upgrade -y --allow-downgrades
 
 
-if [ "$FIRMWARE_UPGRADE" = "1" ]; then
+fxTitle "⚙️ Firmware upgrade"
+if [ "$(fxContainerDetection)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
-  fxTitle "Firmware upgrade"
+  fxMessage "🛥️ Skipped (container detected)"
+
+elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
+
   if [ -z $(command -v fwupdmgr) ]; then apt install fwupd -y; fi
   fwupdmgr get-upgrades -y
   fwupdmgr update -y
 
 else
 
-  fxTitle "Firmware upgrade skipped (disabled in config)"
-
+  fxMessage "🐇 Skipped (disabled in config)"
 fi
 
 
 if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "1" ]; then
 
-  fxTitle "Silently upgrade to a new release, if any"
+  fxTitle "➡️ Silently upgrade to a new release, if any"
   do-release-upgrade -f DistUpgradeViewNonInteractive
 
 elif [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "0" ]; then
 
-  fxTitle "Interactively upgrade to a new release, if any"
+  fxTitle "➡️ Interactively upgrade to a new release, if any"
   do-release-upgrade
 
 else
 
-  fxTitle "Upgrade to a new release skipped (disabled in config)"
-
+  fxTitle "🐇 Upgrade to a new release skipped (disabled in config)"
 fi
 
 if [ "$COMPOSER_UPGRADE" = "1" ]; then
 
-  fxTitle "Self-updating Composer..."
+  fxTitle "📦 Self-updating Composer..."
 
   if ! [ -x "$(command -v composer)" ]; then
     fxMessage "Composer is not installed"
@@ -140,7 +141,7 @@ fi
 
 if [ "$SYMFONY_UPGRADE" = "1" ]; then
 
-  fxTitle "Self-updating Symfony"
+  fxTitle "⚒️ Self-updating Symfony"
 
   if ! [ -x "$(command -v symfony)" ]; then
     fxMessage "Symfony is not installed"
@@ -149,18 +150,15 @@ if [ "$SYMFONY_UPGRADE" = "1" ]; then
   fi
 fi
 
-fxTitle "Packages cleanup (autoremove unused packages)"
+fxTitle "🧹 Packages cleanup (autoremove unused packages)"
 apt-get autoremove -y
 
-fxTitle "Current version"
+fxTitle "ℹ️ Current version"
 lsb_release -a
-
-fxTitle "Time took"
-echo "$((($(date +%s)-$TIME_START)/60)) min."
 
 if [ "$REBOOT" = "1" ]; then
 
-  fxTitle "Rebooting"
+  fxTitle "🔌 Rebooting"
   fxCountdown "$REBOOT_TIMEOUT"
   bash -c "sleep 3; reboot"&
 fi
