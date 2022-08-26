@@ -97,9 +97,9 @@ apt-get dist-upgrade -y --allow-downgrades
 
 
 fxTitle "⚙️ Firmware upgrade"
-if [ "$(fxContainerDetection)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; then
+if [ "$(fxContainerDetection silent)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
-  fxMessage "🛥️ Skipped (container detected)"
+  fxMessage "🐋 Skipped (container detected)"
 
 elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
