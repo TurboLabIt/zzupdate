@@ -18,7 +18,7 @@ if [ ! -z "$1" ]; then
 
   if [ ! -f "$CONFIGFILE_PROFILE_FULLPATH_ETC" ] && [ ! -f "$CONFIGFILE_PROFILE_FULLPATH_DIR" ]; then
 
-    fxCatastrophicError "Profile config file(s) not found"
+    fxCatastrophicError "Profile config file(s) not found" proceed
     echo "🕳️ $CONFIGFILE_PROFILE_FULLPATH_ETC"
     echo "🕳️ $CONFIGFILE_PROFILE_FULLPATH_DIR"
     echo ""
