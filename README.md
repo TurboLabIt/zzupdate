@@ -26,7 +26,7 @@ sudo cp /usr/local/turbolab.it/zzupdate/zzupdate.default.conf /etc/turbolab.it/z
 Need a safe default config for production servers?
 
 ````bash
-curl -o /etc/turbolab.it/zzupdate.conf https://raw.githubusercontent.com/TurboLabIt/zzupdate/master/zzupdate.default-rabbit-mode.conf
+ln -s /etc/turbolab.it/zzupdate.conf /usr/local/turbolab.it/zzupdate/zzupdate.profile.server.conf
 
 ````
 
