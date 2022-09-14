@@ -35,18 +35,6 @@ if [ ! -z "$1" ]; then
 
 fi
 
-## self-update
-HASH_BEFORE=$(fxHashFile "${SCRIPT_FULLPATH}")
-
-fxTitle "🔃 Self-update...."
-git -C "${SCRIPT_DIR}" pull --no-rebase
-bash "${SCRIPT_DIR}setup.sh"
-
-HASH_AFTER=$(fxHashFile "${SCRIPT_FULLPATH}")
-
-fxSelfUpdateHashCheck "${HASH_BEFORE}" "${HASH_AFTER}"
-
-
 ## update every script by TurboLab.it
 ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
