@@ -82,6 +82,7 @@ apt-get update
 
 fxTitle "📦 UPGRADE PACKAGES"
 apt-get dist-upgrade -y --allow-downgrades
+apt install --only-upgrade
 
 
 fxTitle "⚙️ Firmware upgrade"
