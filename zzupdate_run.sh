@@ -47,6 +47,7 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
   fi
 
   fxTitle "***** Update ${ZZSCRIPT_DIR}... *****"
+  git -C "$ZZSCRIPT_DIR" reset --hard
   git -C "$ZZSCRIPT_DIR" pull --no-rebase
 
   if [ -f "${ZZSCRIPT_DIR}/setup.sh" ]; then
