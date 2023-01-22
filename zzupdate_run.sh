@@ -84,6 +84,7 @@ apt-get update
 
 fxTitle "📦 UPGRADE PACKAGES"
 apt-get dist-upgrade -y --allow-downgrades
+snap refresh
 
 
 fxTitle "⚙️ Firmware upgrade"
