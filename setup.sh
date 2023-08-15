@@ -11,4 +11,10 @@ source /usr/local/turbolab.it/bash-fx/bash-fx.sh
 
 sudo bash /usr/local/turbolab.it/bash-fx/setup/start.sh ${SCRIPT_NAME}
 fxLinkBin ${INSTALL_DIR}${SCRIPT_NAME}.sh
+
+## cron copy
+if [ ! -f "/etc/cron.d/zzupdate" ]; then
+  sudo cp "${INSTALL_DIR}cron" "/etc/cron.d/zzupdate"
+fi
+
 sudo bash /usr/local/turbolab.it/bash-fx/setup/the-end.sh ${SCRIPT_NAME}
