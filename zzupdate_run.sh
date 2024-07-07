@@ -91,21 +91,19 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
 
     # Check if the file is older than 3 months
     if [ $NGINX_SIGN_KEY_AGE -gt $ZZUPDATE_NGINX_AGE_THRESHOLD ]; then
-      
-	  fxInfo "Updating the sign key..."
-	  curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
-	  
-    else
 
-	    fxOk "The sign key is recent"
+      fxInfo "Updating the sign key..."
+      curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+
+    else
+    
+      fxOk "The sign key is recent"
     fi
 	
   else
   
     fxMessage "🐇 Skipped (nginx sign key not detected)"
   fi
-  
-fi
 
 else
 
