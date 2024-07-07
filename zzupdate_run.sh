@@ -76,6 +76,43 @@ else
 fi
 
 
+fxTitle "🌎 Nginx sign key update"
+if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
+
+  NGINX_SIGN_KEY_PATH=/usr/share/keyrings/nginx-archive-keyring.gpg
+  if [ -f "$NGINX_SIGN_KEY_PATH" ]; then
+
+    fxInfo "Nginx sign key detected"
+    ZZUPDATE_NGINX_CURRENT_DATE=$(date +%s)
+    NGINX_SIGN_KEY_MOD_DATE=$(stat -c %Y "$NGINX_SIGN_KEY_PATH")
+    NGINX_SIGN_KEY_AGE=$((ZZUPDATE_NGINX_CURRENT_DATE - NGINX_SIGN_KEY_MOD_DATE))
+    ## 3 months
+    ZZUPDATE_NGINX_AGE_THRESHOLD=$((90 * 24 * 60 * 60))
+
+    # Check if the file is older than 3 months
+    if [ $NGINX_SIGN_KEY_AGE -gt $ZZUPDATE_NGINX_AGE_THRESHOLD ]; then
+      
+	  fxInfo "Updating the sign key..."
+	  curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+	  
+    else
+
+	    fxOk "The sign key is recent"
+    fi
+	
+  else
+  
+    fxMessage "🐇 Skipped (nginx sign key not detected)"
+  fi
+  
+fi
+
+else
+
+  fxMessage "🐇 Skipped (disabled in config)"
+fi
+
+
 fxTitle "🧹 Cleanup local cache"
 apt-get clean
 
