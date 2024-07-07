@@ -97,7 +97,7 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
 
     else
     
-      fxOk "The sign key is recent"
+      fxOK "The sign key is recent"
     fi
 	
   else
