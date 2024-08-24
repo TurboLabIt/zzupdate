@@ -165,17 +165,6 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
   fi
 fi
 
-if [ "$SYMFONY_UPGRADE" = "1" ]; then
-
-  fxTitle "⚒️ Self-updating Symfony"
-
-  if ! [ -x "$(command -v symfony)" ]; then
-    fxMessage "Symfony is not installed"
-  else
-    symfony self:update --yes
-  fi
-fi
-
 fxTitle "🧹 Packages cleanup (autoremove unused packages)"
 apt-get autoremove -y
 
