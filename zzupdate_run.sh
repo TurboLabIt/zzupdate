@@ -166,7 +166,7 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
 fi
 
 fxTitle "🧹 Packages cleanup (autoremove unused packages)"
-apt-get autoremove -y
+apt autoremove -y
 
 fxTitle "ℹ️ Current version"
 lsb_release -a
