@@ -115,7 +115,7 @@ fxTitle "🧹 Cleanup local cache"
 apt-get clean
 
 fxTitle "🔍 Update available packages informations"
-apt-get update
+apt-get update --allow-releaseinfo-change
 
 fxTitle "📦 UPGRADE PACKAGES"
 apt-get dist-upgrade -y --allow-downgrades
