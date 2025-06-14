@@ -130,8 +130,10 @@ if [ "$(fxContainerDetection silent)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; 
 elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
   if [ -z $(command -v fwupdmgr) ]; then apt install fwupd -y; fi
-  fwupdmgr get-upgrades -y --assume-yes
-  fwupdmgr update -y --no-reboot
+
+    fwupdmgr refresh --assume-yes
+    fwupdmgr get-upgrades --assume-yes
+    fwupdmgr update --assume-yes --no-reboot
 
 else
 
