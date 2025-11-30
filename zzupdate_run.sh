@@ -170,7 +170,7 @@ elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
     fwupdmgr refresh --assume-yes
     fwupdmgr get-upgrades --assume-yes
-    fwupdmgr update --assume-yes --no-reboot
+    fwupdmgr update --assume-yes --no-reboot-check
 
 else
 
