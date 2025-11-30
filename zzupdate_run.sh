@@ -76,11 +76,46 @@ else
 fi
 
 
+fxTitle "🌎 Nginx sign key update"
+if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
+
+  NGINX_SIGN_KEY_PATH=/usr/share/keyrings/nginx-archive-keyring.gpg
+  if [ -f "$NGINX_SIGN_KEY_PATH" ]; then
+
+    fxInfo "Nginx sign key detected"
+    ZZUPDATE_NGINX_CURRENT_DATE=$(date +%s)
+    NGINX_SIGN_KEY_MOD_DATE=$(stat -c %Y "$NGINX_SIGN_KEY_PATH")
+    NGINX_SIGN_KEY_AGE=$((ZZUPDATE_NGINX_CURRENT_DATE - NGINX_SIGN_KEY_MOD_DATE))
+    ## 3 months
+    ZZUPDATE_NGINX_AGE_THRESHOLD=$((90 * 24 * 60 * 60))
+
+    # Check if the file is older than 3 months
+    if [ $NGINX_SIGN_KEY_AGE -gt $ZZUPDATE_NGINX_AGE_THRESHOLD ]; then
+
+      fxInfo "Updating the sign key..."
+      curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+
+    else
+    
+      fxOK "The sign key is recent"
+    fi
+	
+  else
+  
+    fxMessage "🐇 Skipped (nginx sign key not detected)"
+  fi
+
+else
+
+  fxMessage "🐇 Skipped (disabled in config)"
+fi
+
+
 fxTitle "🧹 Cleanup local cache"
 apt-get clean
 
 fxTitle "🔍 Update available packages informations"
-apt-get update
+apt-get update --allow-releaseinfo-change
 
 fxTitle "📦 UPGRADE PACKAGES"
 apt-get dist-upgrade -y --allow-downgrades
@@ -95,8 +130,10 @@ if [ "$(fxContainerDetection silent)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; 
 elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
   if [ -z $(command -v fwupdmgr) ]; then apt install fwupd -y; fi
-  fwupdmgr get-upgrades -y
-  fwupdmgr update -y
+
+    fwupdmgr refresh --assume-yes
+    fwupdmgr get-upgrades --assume-yes
+    fwupdmgr update --assume-yes --no-reboot
 
 else
 
@@ -130,19 +167,8 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
   fi
 fi
 
-if [ "$SYMFONY_UPGRADE" = "1" ]; then
-
-  fxTitle "⚒️ Self-updating Symfony"
-
-  if ! [ -x "$(command -v symfony)" ]; then
-    fxMessage "Symfony is not installed"
-  else
-    symfony self:update --yes
-  fi
-fi
-
 fxTitle "🧹 Packages cleanup (autoremove unused packages)"
-apt-get autoremove -y
+apt autoremove -y
 
 fxTitle "ℹ️ Current version"
 lsb_release -a

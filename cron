@@ -1,0 +1,8 @@
+MAILTO=""
+SHELL=/bin/bash
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+## Auto-update
+# 50 6 * * * root bash /usr/local/turbolab.it/zzupdate/zzupdate.sh server > /dev/null 2>&1
+
+## 👇 If the last entry is missing a newline, cron will consider it broken and refuse to run it 👇
