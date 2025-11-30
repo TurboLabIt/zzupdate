@@ -93,7 +93,8 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
     if [ $NGINX_SIGN_KEY_AGE -gt $ZZUPDATE_NGINX_AGE_THRESHOLD ]; then
 
       fxInfo "Updating the sign key..."
-      curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor | sudo tee /usr/share/keyrings/nginx-archive-keyring.gpg >/dev/null
+      curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
+        | sudo tee ${NGINX_SIGN_KEY_PATH} >/dev/null
 
     else
     
@@ -103,6 +104,42 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
   else
   
     fxMessage "🐇 Skipped (nginx sign key not detected)"
+  fi
+
+else
+
+  fxMessage "🐇 Skipped (disabled in config)"
+fi
+
+
+fxTitle "🌎 MySQL sign key update"
+if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
+
+  MYSQL_SIGN_KEY_PATH=/etc/apt/trusted.gpg.d/webstackup-mysql.gpg
+  if [ -f "$MYSQL_SIGN_KEY_PATH" ]; then
+
+    fxInfo "MySQL sign key detected"
+    ZZUPDATE_MYSQL_CURRENT_DATE=$(date +%s)
+    MYSQL_SIGN_KEY_MOD_DATE=$(stat -c %Y "$MYSQL_SIGN_KEY_PATH")
+    MYSQL_SIGN_KEY_AGE=$((ZZUPDATE_MYSQL_CURRENT_DATE - MYSQL_SIGN_KEY_MOD_DATE))
+    ## 3 months
+    ZZUPDATE_MYSQL_AGE_THRESHOLD=$((90 * 24 * 60 * 60))
+
+    # Check if the file is older than 3 months
+    if [ $MYSQL_SIGN_KEY_AGE -gt $ZZUPDATE_MYSQL_AGE_THRESHOLD ]; then
+
+      fxInfo "Updating the sign key..."
+      curl https://raw.githubusercontent.com/TurboLabIt/webstackup/refs/heads/master/config/mysql/key.pgp \
+        | gpg --dearmor | sudo tee ${MYSQL_SIGN_KEY_PATH} >/dev/null
+
+    else
+
+      fxOK "The sign key is recent"
+    fi
+
+  else
+
+    fxMessage "🐇 Skipped (MySQL sign key not detected)"
   fi
 
 else
