@@ -204,6 +204,43 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
   fi
 fi
 
+fxTitle "🦙 Ollama models update"
+if [ "$OLLAMA_MODELS_UPDATE" = "1" ]; then
+
+  if ! [ -x "$(command -v ollama)" ]; then
+
+    fxMessage "🐇 Skipped (ollama not detected)"
+
+  elif ! ollama list > /dev/null 2>&1; then
+
+    fxMessage "🐇 Skipped (the ollama service is not responding)"
+
+  else
+
+    for OLLAMA_MODEL in $(ollama list | awk 'NR>1 {print $1}'); do
+
+      fxInfo "Pulling ##${OLLAMA_MODEL}##..."
+      OLLAMA_MODEL_ID_PRE=$(ollama list | awk -v m="$OLLAMA_MODEL" '$1 == m {print $2}')
+      ollama pull "$OLLAMA_MODEL"
+      OLLAMA_MODEL_ID_POST=$(ollama list | awk -v m="$OLLAMA_MODEL" '$1 == m {print $2}')
+
+      ## if the model was actually updated while loaded in memory, unload it:
+      ## the next request will then serve the new version
+      if [ "$OLLAMA_MODEL_ID_PRE" != "$OLLAMA_MODEL_ID_POST" ] && ollama ps | awk 'NR>1 {print $1}' | grep -qx "$OLLAMA_MODEL"; then
+
+        fxInfo "##${OLLAMA_MODEL}## was updated while loaded. Unloading it..."
+        ollama stop "$OLLAMA_MODEL"
+      fi
+
+    done
+  fi
+
+else
+
+  fxMessage "🐇 Skipped (disabled in config)"
+fi
+
+
 fxTitle "🧹 Packages cleanup (autoremove unused packages)"
 apt autoremove -y
 
