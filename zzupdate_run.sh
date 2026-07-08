@@ -20,8 +20,13 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 
   fxTitle "***** Update ${ZZSCRIPT_DIR}... *****"
   ## -c trusts the dir for this command only ("config --global --add" would append a duplicate line to root's .gitconfig on every run)
-  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" reset --hard
-  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" pull --no-rebase
+  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" config core.fileMode false
+
+  ## mirror origin. fetch && reset: an offline run must leave the repo untouched
+  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" fetch --depth 1 \
+    && git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" reset --hard @{upstream}
+
+  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" gc --prune=all
 
   if [ -f "${ZZSCRIPT_DIR}/setup.sh" ]; then
     bash "${ZZSCRIPT_DIR}/setup.sh"
