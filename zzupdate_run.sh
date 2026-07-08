@@ -5,35 +5,7 @@ SCRIPT_NAME=zzupdate
 source "/usr/local/turbolab.it/bash-fx/bash-fx.sh"
 fxHeader "🔃 zzupdate 🔃"
 rootCheck
-fxConfigLoader
-
-## Profile requested
-if [ ! -z "$1" ]; then
-
-  fxTitle "📋 Profile requested..."
-
-  CONFIGFILE_PROFILE_NAME=${SCRIPT_NAME}.profile.${1}.conf
-  CONFIGFILE_PROFILE_FULLPATH_ETC=/etc/turbolab.it/$CONFIGFILE_PROFILE_NAME
-  CONFIGFILE_PROFILE_FULLPATH_DIR=${SCRIPT_DIR}$CONFIGFILE_PROFILE_NAME
-
-  if [ ! -f "$CONFIGFILE_PROFILE_FULLPATH_ETC" ] && [ ! -f "$CONFIGFILE_PROFILE_FULLPATH_DIR" ]; then
-
-    fxCatastrophicError "Profile config file(s) not found" proceed
-    echo "🕳️ $CONFIGFILE_PROFILE_FULLPATH_ETC"
-    echo "🕳️ $CONFIGFILE_PROFILE_FULLPATH_DIR"
-    echo ""
-
-    fxTitle "How to fix it"
-    echo "Create a config file for this profile:"
-    echo "sudo cp $CONFIGFILE_FULLPATH_DEFAULT $CONFIGFILE_PROFILE_FULLPATH_ETC && sudo nano $CONFIGFILE_PROFILE_FULLPATH_ETC && sudo chmod u=rwx,go=rx /etc/turbolab.it/zzupdate*"
-
-    fxEndFooter failure
-    exit
-  fi
-
-  fxLoadConfigFromInput "$CONFIGFILE_PROFILE_FULLPATH_ETC" "$CONFIGFILE_PROFILE_FULLPATH_DIR"
-
-fi
+fxConfigLoader "$1"
 
 ## update every script by TurboLab.it
 ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
@@ -47,9 +19,9 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
   fi
 
   fxTitle "***** Update ${ZZSCRIPT_DIR}... *****"
-  git config --global --add safe.directory "$ZZSCRIPT_DIR"
-  git -C "$ZZSCRIPT_DIR" reset --hard
-  git -C "$ZZSCRIPT_DIR" pull --no-rebase
+  ## -c trusts the dir for this command only ("config --global --add" would append a duplicate line to root's .gitconfig on every run)
+  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" reset --hard
+  git -C "$ZZSCRIPT_DIR" -c safe.directory="$ZZSCRIPT_DIR" pull --no-rebase
 
   if [ -f "${ZZSCRIPT_DIR}/setup.sh" ]; then
     bash "${ZZSCRIPT_DIR}/setup.sh"
