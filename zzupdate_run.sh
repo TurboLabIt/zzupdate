@@ -7,6 +7,10 @@ fxHeader "🔃 zzupdate 🔃"
 rootCheck
 fxConfigLoader "$1"
 
+## update bash-fx itself (its setup.sh self-skips if freshly fetched), then re-source it
+bash "/usr/local/turbolab.it/bash-fx/setup.sh"
+source "/usr/local/turbolab.it/bash-fx/bash-fx.sh"
+
 ## update every script by TurboLab.it
 ZZSCRIPT_DIRS=($(find $INSTALL_DIR_PARENT -maxdepth 1 -type d))
 
