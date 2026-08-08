@@ -163,7 +163,7 @@ if [ "$(fxContainerDetection silent)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; 
 
 elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
-  if [ -z $(command -v fwupdmgr) ]; then apt install fwupd -y; fi
+  if [ -z $(command -v fwupdmgr) ]; then apt-get install fwupd -y; fi
 
     fwupdmgr refresh --assume-yes
     fwupdmgr get-upgrades --assume-yes
@@ -239,7 +239,7 @@ fi
 
 
 fxTitle "🧹 Packages cleanup (autoremove unused packages)"
-apt autoremove -y
+apt-get autoremove -y
 
 fxTitle "ℹ️ Current version"
 lsb_release -a

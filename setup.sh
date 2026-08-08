@@ -3,7 +3,7 @@ echo ""
 SCRIPT_NAME=zzupdate
 
 ## bash-fx
-if [ -z $(command -v curl) ]; then sudo apt update && sudo apt install curl -y; fi
+if [ -z $(command -v curl) ]; then sudo apt-get update && sudo apt-get install curl -y; fi
 # needrestart is suppressed here vvv
 curl -s https://raw.githubusercontent.com/TurboLabIt/bash-fx/master/setup.sh | sudo bash
 source /usr/local/turbolab.it/bash-fx/bash-fx.sh
