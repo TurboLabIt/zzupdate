@@ -246,9 +246,35 @@ lsb_release -a
 
 if [ "$REBOOT" = "1" ]; then
 
+  if ! [[ "$REBOOT_DELAY" =~ ^[0-9]+$ ]]; then
+
+    fxWarning "REBOOT_DELAY must be an integer, got '${REBOOT_DELAY}': rebooting with no delay"
+    REBOOT_DELAY=0
+  fi
+
   fxTitle "🔌 Rebooting"
+
+  if [ "$REBOOT_DELAY" -gt 0 ]; then
+    fxInfo "The reboot will be scheduled ${REBOOT_DELAY} sec ahead, in background, right after this countdown"
+  fi
+
+  ## always honored, delay or not: it's the last chance to abort with CTRL+C
   fxCountdown "$REBOOT_TIMEOUT"
-  bash -c "sleep 3; reboot"&
+
+  if [ "$REBOOT_DELAY" -gt 0 ]; then
+
+    ZZUPDATE_REBOOT_PIDFILE=/run/zzupdate-reboot.pid
+
+    ## setsid: the pending reboot must outlive this script and its terminal (a closing SSH session HUPs the whole process group)
+    setsid bash -c "echo \$\$ > ${ZZUPDATE_REBOOT_PIDFILE}; sleep ${REBOOT_DELAY}; reboot" > /dev/null 2>&1 &
+
+    fxInfo "The system will reboot at $(date -d "+${REBOOT_DELAY} seconds" +'%T'): this script ends right now, the wait runs in background"
+    fxMessage "To cancel it: sudo kill \$(cat ${ZZUPDATE_REBOOT_PIDFILE})"
+
+  else
+
+    bash -c "sleep 3; reboot"&
+  fi
 fi
 
 fxEndFooter
