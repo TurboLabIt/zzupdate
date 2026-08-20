@@ -84,12 +84,12 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
 	
   else
   
-    fxMessage "🐇 Skipped (nginx sign key not detected)"
+    fxInfo "🐇 Skipped (nginx sign key not detected)"
   fi
 
 else
 
-  fxMessage "🐇 Skipped (disabled in config)"
+  fxInfo "🐇 Skipped (disabled in config)"
 fi
 
 
@@ -120,12 +120,12 @@ if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
 
   else
 
-    fxMessage "🐇 Skipped (MySQL sign key not detected)"
+    fxInfo "🐇 Skipped (MySQL sign key not detected)"
   fi
 
 else
 
-  fxMessage "🐇 Skipped (disabled in config)"
+  fxInfo "🐇 Skipped (disabled in config)"
 fi
 
 
@@ -160,14 +160,14 @@ if [ -x "$(command -v snap)" ]; then
 
 else
 
-  fxMessage "🐇 Skipped (snap not detected)"
+  fxInfo "🐇 Skipped (snap not detected)"
 fi
 
 
 fxTitle "⚙️ Firmware upgrade"
 if [ "$(fxContainerDetection silent)" = "1" ] && [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
-  fxMessage "🐋 Skipped (container detected)"
+  fxInfo "🐋 Skipped (container detected)"
 
 elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
@@ -179,7 +179,7 @@ elif [ "$FIRMWARE_UPGRADE" = "1" ]; then
 
 else
 
-  fxMessage "🐇 Skipped (disabled in config)"
+  fxInfo "🐇 Skipped (disabled in config)"
 fi
 
 
@@ -214,11 +214,11 @@ if [ "$OLLAMA_MODELS_UPDATE" = "1" ]; then
 
   if ! [ -x "$(command -v ollama)" ]; then
 
-    fxMessage "🐇 Skipped (ollama not detected)"
+    fxInfo "🐇 Skipped (ollama not detected)"
 
   elif ! ollama list > /dev/null 2>&1; then
 
-    fxMessage "🐇 Skipped (the ollama service is not responding)"
+    fxInfo "🐇 Skipped (the ollama service is not responding)"
 
   else
 
@@ -242,7 +242,7 @@ if [ "$OLLAMA_MODELS_UPDATE" = "1" ]; then
 
 else
 
-  fxMessage "🐇 Skipped (disabled in config)"
+  fxInfo "🐇 Skipped (disabled in config)"
 fi
 
 
