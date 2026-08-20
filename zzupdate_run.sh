@@ -46,14 +46,15 @@ if [ ! -z "${ADDITIONAL_UPDATE_SCRIPT}" ]; then
 fi
 
 
+fxTitle "🦘 Release channel switching"
 if [ "$SWITCH_PROMPT_TO_NORMAL" = "1" ]; then
 
-  fxTitle "🦘 Switching to the 'normal' release channel (if 'never' or 'lts')"
+  fxInfo "Switching to the 'normal' release channel (if 'never' or 'lts')"
   sed -i -E 's/Prompt=(never|lts)/Prompt=normal/g' "/etc/update-manager/release-upgrades"
 
 else
 
-  fxTitle "🐇 Channel switching is disabled: using pre-existing setting"
+  fxInfo "🐇 Channel switching is disabled: using pre-existing setting"
 fi
 
 
