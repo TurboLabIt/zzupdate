@@ -203,7 +203,7 @@ if [ "$COMPOSER_UPGRADE" = "1" ]; then
   fxTitle "📦 Self-updating Composer..."
 
   if ! [ -x "$(command -v composer)" ]; then
-    fxMessage "Composer is not installed"
+    fxInfo "Composer is not installed"
   else
     XDEBUG_MODE=off composer self-update
   fi
