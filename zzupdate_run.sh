@@ -183,19 +183,20 @@ else
 fi
 
 
+fxTitle "📦 Upgrading to a new release.."
 if [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "1" ]; then
 
-  fxTitle "➡️ Silently upgrade to a new release, if any"
+  fxInfo "➡️ Silently upgrade to a new release, if any"
   do-release-upgrade -f DistUpgradeViewNonInteractive
 
 elif [ "$VERSION_UPGRADE" = "1" ] && [ "$VERSION_UPGRADE_SILENT" = "0" ]; then
 
-  fxTitle "➡️ Interactively upgrade to a new release, if any"
+  fxInfo "➡️ Interactively upgrade to a new release, if any"
   do-release-upgrade
 
 else
 
-  fxTitle "🐇 Upgrade to a new release skipped (disabled in config)"
+  fxInfo "🐇 Upgrade to a new release skipped (disabled in config)"
 fi
 
 if [ "$COMPOSER_UPGRADE" = "1" ]; then
