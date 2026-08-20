@@ -153,7 +153,15 @@ else
   apt-get dist-upgrade -y --allow-downgrades
 fi
 
-snap refresh
+fxTitle "📦 Snap packages update"
+if [ -x "$(command -v snap)" ]; then
+
+  snap refresh
+
+else
+
+  fxMessage "🐇 Skipped (snap not detected)"
+fi
 
 
 fxTitle "⚙️ Firmware upgrade"
