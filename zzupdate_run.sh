@@ -144,8 +144,10 @@ if [ "$KEEP_MAINTAINER_CONFIG_FILES" = "1" ]; then
 
   ## --force-confnew alone: --force-confdef would bring back the default action, which is "keep the local file"
   ## --force-confmiss: put back a config file deleted locally
-  ## UCF_FORCE_*: same policy for the config files handled by ucf instead of dpkg
-  DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFNEW=YES UCF_FORCE_CONFFMISS=YES \
+  ## ucf (config files handled by ucf instead of dpkg) reads the same --force-conf* policy from DPKG_FORCE, which dpkg exports to every maintainer script (ucf >= 3.0047, Ubuntu >= 25.04)
+  ## UCF_FORCE_CONFFNEW must not be exported: grub's postinst sets its own UCF_FORCE_CONFFOLD=1 and ucf aborts when both are set (#5)
+  ## UCF_FORCE_CONFFMISS has no opposite, so it's safe: older ucf ignores DPKG_FORCE and still needs it (a locally modified ucf file is kept there, unavoidable)
+  DEBIAN_FRONTEND=noninteractive UCF_FORCE_CONFFMISS=YES \
     apt-get dist-upgrade -y --allow-downgrades \
       -o Dpkg::Options::="--force-confnew" -o Dpkg::Options::="--force-confmiss"
 
