@@ -31,11 +31,6 @@ ln -s /usr/local/turbolab.it/zzupdate/zzupdate.profile.server.conf /etc/turbolab
 ````
 
 
-# No reboot
-
-`zzupdate noreboot` runs the usual update, but never reboots at the end, whatever `/etc/turbolab.it/zzupdate.conf` says. It's for callers which take care of the reboot on their own, like [multissh's update task](https://github.com/TurboLabIt/multissh/blob/main/ops-center/remote/update-remote.sh).
-
-
 # Run it
 
 It's upgrade time! Run `zzupdate` to fully update your system.
