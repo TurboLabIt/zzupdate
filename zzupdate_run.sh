@@ -75,8 +75,21 @@ if [ "$NGINX_SIGN_KEY_UPDATE" = "1" ]; then
     if [ $NGINX_SIGN_KEY_AGE -gt $ZZUPDATE_NGINX_AGE_THRESHOLD ]; then
 
       fxInfo "Updating the sign key..."
-      curl https://nginx.org/keys/nginx_signing.key | gpg --dearmor \
-        | sudo tee ${NGINX_SIGN_KEY_PATH} >/dev/null
+      NGINX_SIGN_KEY_TMP=$(mktemp)
+      curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor > "$NGINX_SIGN_KEY_TMP"
+
+      ## a failed download dearmors to an empty file: it must never replace the working key
+      if [ -s "$NGINX_SIGN_KEY_TMP" ]; then
+
+        install -m 644 "$NGINX_SIGN_KEY_TMP" "$NGINX_SIGN_KEY_PATH"
+        fxOK "Sign key updated"
+
+      else
+
+        fxWarning "Sign key download failed: the current one is kept, the next run tries again"
+      fi
+
+      rm -f "$NGINX_SIGN_KEY_TMP"
 
     else
     
@@ -97,16 +110,10 @@ fi
 fxTitle "🌎 MySQL sign key update"
 if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
 
-  ## where webstackup mysql/install.sh has put the key over time: since 2026-05, since 2022-11, briefly in 2022-11
-  MYSQL_SIGN_KEY_FOUND=0
-  for MYSQL_SIGN_KEY_PATH in /usr/share/keyrings/mysql.gpg /etc/apt/trusted.gpg.d/webstackup-mysql.gpg /usr/share/keyrings/mysql-archive-keyring.gpg; do
+  MYSQL_SIGN_KEY_PATH=/usr/share/keyrings/mysql.gpg
+  if [ -f "$MYSQL_SIGN_KEY_PATH" ]; then
 
-    if [ ! -f "$MYSQL_SIGN_KEY_PATH" ]; then
-      continue
-    fi
-
-    MYSQL_SIGN_KEY_FOUND=1
-    fxInfo "MySQL sign key detected: ${MYSQL_SIGN_KEY_PATH}"
+    fxInfo "MySQL sign key detected"
     ZZUPDATE_MYSQL_CURRENT_DATE=$(date +%s)
     MYSQL_SIGN_KEY_MOD_DATE=$(stat -c %Y "$MYSQL_SIGN_KEY_PATH")
     MYSQL_SIGN_KEY_AGE=$((ZZUPDATE_MYSQL_CURRENT_DATE - MYSQL_SIGN_KEY_MOD_DATE))
@@ -138,9 +145,9 @@ if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
 
       fxOK "The sign key is recent"
     fi
-  done
 
-  if [ "$MYSQL_SIGN_KEY_FOUND" = "0" ]; then
+  else
+
     fxInfo "🐇 Skipped (MySQL sign key not detected)"
   fi
 
