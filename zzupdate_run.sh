@@ -97,10 +97,16 @@ fi
 fxTitle "🌎 MySQL sign key update"
 if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
 
-  MYSQL_SIGN_KEY_PATH=/etc/apt/trusted.gpg.d/webstackup-mysql.gpg
-  if [ -f "$MYSQL_SIGN_KEY_PATH" ]; then
+  ## where webstackup mysql/install.sh has put the key over time: since 2026-05, since 2022-11, briefly in 2022-11
+  MYSQL_SIGN_KEY_FOUND=0
+  for MYSQL_SIGN_KEY_PATH in /usr/share/keyrings/mysql.gpg /etc/apt/trusted.gpg.d/webstackup-mysql.gpg /usr/share/keyrings/mysql-archive-keyring.gpg; do
 
-    fxInfo "MySQL sign key detected"
+    if [ ! -f "$MYSQL_SIGN_KEY_PATH" ]; then
+      continue
+    fi
+
+    MYSQL_SIGN_KEY_FOUND=1
+    fxInfo "MySQL sign key detected: ${MYSQL_SIGN_KEY_PATH}"
     ZZUPDATE_MYSQL_CURRENT_DATE=$(date +%s)
     MYSQL_SIGN_KEY_MOD_DATE=$(stat -c %Y "$MYSQL_SIGN_KEY_PATH")
     MYSQL_SIGN_KEY_AGE=$((ZZUPDATE_MYSQL_CURRENT_DATE - MYSQL_SIGN_KEY_MOD_DATE))
@@ -111,16 +117,30 @@ if [ "$MYSQL_SIGN_KEY_UPDATE" = "1" ]; then
     if [ $MYSQL_SIGN_KEY_AGE -gt $ZZUPDATE_MYSQL_AGE_THRESHOLD ]; then
 
       fxInfo "Updating the sign key..."
-      curl https://raw.githubusercontent.com/TurboLabIt/webstackup/refs/heads/master/config/mysql/key.pgp \
-        | gpg --dearmor | sudo tee ${MYSQL_SIGN_KEY_PATH} >/dev/null
+      MYSQL_SIGN_KEY_TMP=$(mktemp)
+      curl -fsSL https://raw.githubusercontent.com/TurboLabIt/webstackup/refs/heads/master/config/mysql/key.pgp \
+        | gpg --dearmor > "$MYSQL_SIGN_KEY_TMP"
+
+      ## a failed download dearmors to an empty file: it must never replace the working key
+      if [ -s "$MYSQL_SIGN_KEY_TMP" ]; then
+
+        install -m 644 "$MYSQL_SIGN_KEY_TMP" "$MYSQL_SIGN_KEY_PATH"
+        fxOK "Sign key updated"
+
+      else
+
+        fxWarning "Sign key download failed: the current one is kept, the next run tries again"
+      fi
+
+      rm -f "$MYSQL_SIGN_KEY_TMP"
 
     else
 
       fxOK "The sign key is recent"
     fi
+  done
 
-  else
-
+  if [ "$MYSQL_SIGN_KEY_FOUND" = "0" ]; then
     fxInfo "🐇 Skipped (MySQL sign key not detected)"
   fi
 
