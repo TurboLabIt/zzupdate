@@ -39,6 +39,18 @@ for ZZSCRIPT_DIR in "${ZZSCRIPT_DIRS[@]}"; do
 done
 
 
+## bitbucket.org refuses git-over-SSH from 2026-11-12: it moves to ssh.bitbucket.org (same host keys).
+## The system-wide rewrite covers every clone, submodule and composer/npm dependency of every user.
+## It must run before the custom update script, which may pull from Bitbucket
+# https://community.atlassian.com/forums/discussion/3234032/
+fxSshSetKnownHosts
+
+fxTitle "🪣 Bitbucket SSH: git@bitbucket.org ➡️ git@ssh.bitbucket.org"
+git config --system --replace-all url."git@ssh.bitbucket.org:".insteadOf "git@bitbucket.org:"
+git config --system --replace-all url."ssh://git@ssh.bitbucket.org/".insteadOf "ssh://git@bitbucket.org/"
+fxOK "Rewritten system-wide (/etc/gitconfig)"
+
+
 ## run a custom update script (if configured)
 if [ ! -z "${ADDITIONAL_UPDATE_SCRIPT}" ]; then
   fxTitle "💨 Running ${ADDITIONAL_UPDATE_SCRIPT}..."
