@@ -2,7 +2,8 @@ MAILTO=""
 SHELL=/bin/bash
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 
-## Auto-update
-# 50 6 * * * root bash /usr/local/turbolab.it/zzupdate/zzupdate.sh server > /dev/null 2>&1
+## Auto-update. The log keeps the last run only (overwritten every time).
+## mkdir: if the log dir is missing, the redirect fails and zzupdate never starts
+# 50 6 * * * root mkdir -p /var/log/turbolab.it && bash /usr/local/turbolab.it/zzupdate/zzupdate.sh server > /var/log/turbolab.it/zzupdate_cron.log 2>&1
 
 ## 👇 If the last entry is missing a newline, cron will consider it broken and refuse to run it 👇
