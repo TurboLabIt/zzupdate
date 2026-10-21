@@ -17,4 +17,7 @@ if [ ! -f "/etc/cron.d/zzupdate" ]; then
   sudo cp "${INSTALL_DIR}cron" "/etc/cron.d/zzupdate"
 fi
 
+## the cron logs there: with the dir missing, the redirect would fail and zzupdate would never start
+sudo mkdir -p "/var/log/turbolab.it"
+
 sudo bash /usr/local/turbolab.it/bash-fx/setup/the-end.sh ${SCRIPT_NAME}
