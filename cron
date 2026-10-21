@@ -1,8 +1,9 @@
 MAILTO=""
 SHELL=/bin/bash
-PATH=/sbin:/bin:/usr/sbin:/usr/bin
+## /usr/local/bin: fxLinkBin puts the zzupdate command there
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
 ## Auto-update. The log keeps the last run only (overwritten every time)
-# 50 6 * * * root bash /usr/local/turbolab.it/zzupdate/zzupdate.sh server > /var/log/turbolab.it/zzupdate_cron.log 2>&1
+# 50 6 * * * root zzupdate server > /var/log/turbolab.it/zzupdate_cron.log 2>&1
 
 ## 👇 If the last entry is missing a newline, cron will consider it broken and refuse to run it 👇
